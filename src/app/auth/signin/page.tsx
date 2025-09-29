@@ -37,69 +37,95 @@ export default function SignIn() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Sign in to Heaton Directory
+      <div className="max-w-md w-full">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <div className="w-16 h-16 bg-gradient-heaton rounded-2xl flex items-center justify-center shadow-lg mx-auto mb-4">
+            <span className="text-white font-bold text-2xl font-heading">H</span>
+          </div>
+          <h2 className="text-3xl font-bold text-heaton-gray font-heading">
+            WELCOME BACK
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            Access the employee directory
+          <p className="mt-2 text-heaton-gray-light font-medium">
+            Sign in to access the Heaton employee directory
           </p>
         </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="rounded-md shadow-sm -space-y-px">
-            <div>
-              <label htmlFor="username" className="sr-only">
-                Username
-              </label>
-              <input
-                id="username"
-                name="username"
-                type="text"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="sr-only">
-                Password
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-          </div>
 
-          {error && (
-            <div className="text-red-600 text-sm text-center">{error}</div>
-          )}
+        {/* Sign In Form */}
+        <div className="bg-white rounded-xl shadow-modern-lg border border-gray-100 overflow-hidden">
+          <form className="p-8 space-y-6" onSubmit={handleSubmit}>
+            <div className="space-y-4">
+              <div>
+                <label htmlFor="username" className="block text-sm font-medium text-heaton-gray mb-2">
+                  Username
+                </label>
+                <input
+                  id="username"
+                  name="username"
+                  type="text"
+                  required
+                  className="input-modern"
+                  placeholder="Enter your username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </div>
+              <div>
+                <label htmlFor="password" className="block text-sm font-medium text-heaton-gray mb-2">
+                  Password
+                </label>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  required
+                  className="input-modern"
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+            </div>
 
-          <div>
+            {error && (
+              <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm">
+                {error}
+              </div>
+            )}
+
             <button
               type="submit"
               disabled={loading}
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+              className="btn-modern bg-heaton-blue text-white hover:bg-heaton-blue-dark focus:ring-blue-500 w-full"
             >
-              {loading ? 'Signing in...' : 'Sign in'}
+              {loading ? (
+                <div className="flex items-center justify-center space-x-2">
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  <span>Signing in...</span>
+                </div>
+              ) : (
+                'Sign In'
+              )}
             </button>
-          </div>
+          </form>
 
-          <div className="text-sm text-center text-gray-600">
-            <p>Demo credentials:</p>
-            <p>Username: admin, Password: password123</p>
-            <p>Username: user, Password: user123</p>
+          {/* Demo Credentials */}
+          <div className="bg-blue-50 border-t border-blue-100 p-6">
+            <h3 className="text-sm font-semibold text-heaton-gray mb-3">Demo Credentials</h3>
+            <div className="space-y-2 text-sm">
+              <div className="flex items-center justify-between p-2 bg-white rounded-lg border">
+                <span className="text-heaton-gray">
+                  <strong>Admin:</strong> admin / password123
+                </span>
+              </div>
+              <div className="flex items-center justify-between p-2 bg-white rounded-lg border">
+                <span className="text-heaton-gray">
+                  <strong>User:</strong> user / user123
+                </span>
+              </div>
+            </div>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   )

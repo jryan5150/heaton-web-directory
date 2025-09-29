@@ -1,27 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Inter:wght@100..900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+  --heaton-blue: #3182CE;
+  --heaton-blue-dark: #2B6CB0;
+  --heaton-gray-dark: #1A202C;
+  --heaton-gray: #2D3748;
+  --heaton-gray-light: #4A5568;
+  --background-rgb: 248, 250, 252;
+  --foreground-rgb: 26, 32, 44;
 }
 
 body {
+  font-family: 'Inter', sans-serif;
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background-color: rgb(var(--background-rgb));
+  line-height: 1.6;
+}
+
+.font-heading {
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+.text-heaton-blue {
+  color: var(--heaton-blue);
+}
+
+.bg-heaton-blue {
+  background-color: var(--heaton-blue);
+}
+
+.bg-heaton-blue:hover {
+  background-color: var(--heaton-blue-dark);
+}
+
+.border-heaton-blue {
+  border-color: var(--heaton-blue);
+}
+
+.text-heaton-gray {
+  color: var(--heaton-gray);
+}
+
+.text-heaton-gray-light {
+  color: var(--heaton-gray-light);
+}
+
+/* Modern gradient backgrounds */
+.bg-gradient-heaton {
+  background: linear-gradient(135deg, var(--heaton-blue) 0%, var(--heaton-blue-dark) 100%);
+}
+
+/* Modern card shadows */
+.shadow-modern {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.shadow-modern-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Modern button styles */
+.btn-modern {
+  @apply px-6 py-3 rounded-lg font-medium transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2;
+}
+
+/* Professional avatar styles */
+.avatar-professional {
+  background: linear-gradient(135deg, var(--heaton-blue) 0%, var(--heaton-blue-dark) 100%);
+}
+
+/* Modern input styles */
+.input-modern {
+  @apply w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white;
 }
