@@ -3,11 +3,16 @@ import { getEmployeeById, updateEmployee, deleteEmployee } from '@/lib/database'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 
+type RouteContext = {
+  params: Promise<{ id: string }>
+}
+
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: RouteContext
 ) {
   try {
+    const params = await context.params
     const employee = await getEmployeeById(params.id)
 
     if (!employee) {
@@ -22,7 +27,7 @@ export async function GET(
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: RouteContext
 ) {
   try {
     // Check authentication
@@ -31,6 +36,7 @@ export async function PATCH(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
+    const params = await context.params
     const body = await request.json()
     const employee = await updateEmployee(params.id, body)
 
@@ -46,7 +52,7 @@ export async function PATCH(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: RouteContext
 ) {
   try {
     // Check authentication
@@ -55,6 +61,7 @@ export async function DELETE(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
+    const params = await context.params
     const success = await deleteEmployee(params.id)
 
     if (!success) {
