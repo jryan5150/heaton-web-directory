@@ -1,13 +1,12 @@
-import { loadHeatonEmployeesFromPath } from '@/lib/importHeatonData'
-import AppleDirectoryView from '@/components/AppleDirectoryView'
-import path from 'path'
+import { getAllEmployees } from '@/lib/database'
+import ElegantDirectory from '@/components/ElegantDirectory'
 
 export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 export default async function HeatonDirectoryPage() {
-  // Load employees from CSV file
-  const csvPath = path.join(process.cwd(), 'Heaton_Directory_Nextiva_Format.csv')
-  const employees = await loadHeatonEmployeesFromPath(csvPath)
+  // Load employees from database
+  const employees = await getAllEmployees()
 
-  return <AppleDirectoryView employees={employees} />
+  return <ElegantDirectory employees={employees} />
 }
