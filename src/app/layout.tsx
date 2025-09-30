@@ -1,9 +1,15 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Roboto_Condensed } from 'next/font/google'
 import './globals.css'
+import '@/styles/apple-design-system.css'
+import '@/styles/directory-layout.css'
 import NextAuthSessionProvider from '@/components/SessionProvider'
 
-const inter = Inter({ subsets: ['latin'] })
+const robotoCondensed = Roboto_Condensed({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  display: 'swap'
+})
 
 export const metadata: Metadata = {
   title: 'Heaton Web Directory',
@@ -17,7 +23,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={robotoCondensed.className}>
         <NextAuthSessionProvider>
           {children}
         </NextAuthSessionProvider>
