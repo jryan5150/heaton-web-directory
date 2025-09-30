@@ -1,8 +1,8 @@
 'use client'
 
 import { sampleEmployees } from '@/lib/sampleData'
-import ElegantDirectory from '@/components/ElegantDirectory'
+import RetoolStyleDirectory from '@/components/RetoolStyleDirectory'
 
 export default function AppleDemoPage() {
-  return <ElegantDirectory employees={sampleEmployees} />
+  return <RetoolStyleDirectory employees={sampleEmployees} />
 }
