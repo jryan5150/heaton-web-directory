@@ -1,8 +1,8 @@
 'use client'
 
 import { sampleEmployees } from '@/lib/sampleData'
-import AppleDirectoryView from '@/components/AppleDirectoryView'
+import ElegantDirectory from '@/components/ElegantDirectory'
 
 export default function AppleDemoPage() {
-  return <AppleDirectoryView employees={sampleEmployees} />
+  return <ElegantDirectory employees={sampleEmployees} />
 }
