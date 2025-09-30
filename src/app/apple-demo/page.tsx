@@ -1,8 +1,8 @@
 'use client'
 
 import { sampleEmployees } from '@/lib/sampleData'
-import ModernDirectory from '@/components/ModernDirectory'
+import ProfessionalDirectory from '@/components/ProfessionalDirectory'
 
 export default function AppleDemoPage() {
-  return <ModernDirectory employees={sampleEmployees} />
+  return <ProfessionalDirectory employees={sampleEmployees} />
 }
