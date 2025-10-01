@@ -452,69 +452,72 @@ export default function ProfessionalDirectory({ employees: initialEmployees }: P
                     cursor: 'default'
                   }}
                 >
-                  {/* Avatar and Name Section */}
-                  <div style={{ marginBottom: '1rem' }}>
-                    {/* Avatar Circle */}
-                    <div style={{
-                      width: '4.5rem',
-                      height: '4.5rem',
-                      borderRadius: '50%',
-                      background: 'linear-gradient(135deg, #3182ce 0%, #2c5aa0 100%)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: 'white',
-                      fontSize: '1.5rem',
-                      fontWeight: 700,
-                      marginBottom: '0.75rem'
-                    }}>
-                      {employee.firstName[0]}{employee.lastName[0]}
-                    </div>
-
-                    {/* Employee Name & Info */}
-                    <div>
-                      <h2 style={{
-                        fontSize: '1.125rem',
-                        fontWeight: 700,
-                        color: 'var(--primary-text)',
-                        margin: '0 0 0.25rem 0',
-                        lineHeight: 1.3
-                      }}>
-                        {employee.firstName} {employee.lastName}
-                      </h2>
-                      {employee.extension && (
-                        <div style={{
-                          fontSize: '0.9rem',
-                          fontWeight: 700,
-                          color: 'var(--accent-color)',
-                          marginBottom: '0.25rem',
-                          fontFamily: 'monospace'
-                        }}>
-                          Ext. {employee.extension}
-                        </div>
-                      )}
-                      {employee.title && (
-                        <p style={{
-                          fontSize: '0.875rem',
-                          fontWeight: 500,
-                          color: 'var(--secondary-text)',
-                          margin: 0,
-                          lineHeight: 1.4
-                        }}>
-                          {employee.title}
-                        </p>
-                      )}
-                    </div>
+                  {/* Avatar - Left Aligned */}
+                  <div style={{
+                    width: '4.5rem',
+                    height: '4.5rem',
+                    borderRadius: '50%',
+                    background: 'linear-gradient(135deg, #3182ce 0%, #2c5aa0 100%)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'white',
+                    fontSize: '1.5rem',
+                    fontWeight: 700,
+                    marginBottom: '1rem'
+                  }}>
+                    {employee.firstName[0]}{employee.lastName[0]}
                   </div>
 
-                  {/* Department & Team */}
-                  <div style={{ marginBottom: '1rem' }}>
+                  {/* Employee Name & Extension - Left Aligned */}
+                  <div style={{ marginBottom: '1.25rem' }}>
+                    <h2 style={{
+                      fontSize: '1.375rem',
+                      fontWeight: 700,
+                      color: 'var(--primary-text)',
+                      margin: '0 0 0.375rem 0',
+                      lineHeight: 1.2
+                    }}>
+                      {employee.firstName} {employee.lastName}
+                    </h2>
+                    {employee.extension && (
+                      <div style={{
+                        fontSize: '1.125rem',
+                        fontWeight: 700,
+                        color: 'var(--accent-color)',
+                        marginBottom: '0.375rem',
+                        fontFamily: 'monospace'
+                      }}>
+                        Ext. {employee.extension}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Contact Info - Centered */}
+                  <div style={{
+                    paddingTop: '1rem',
+                    borderTop: '1px solid var(--border-color)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '0.75rem',
+                    alignItems: 'center',
+                    textAlign: 'center'
+                  }}>
+                    {employee.title && (
+                      <div style={{
+                        fontSize: '0.875rem',
+                        fontWeight: 500,
+                        color: 'var(--secondary-text)',
+                        marginBottom: '0.25rem'
+                      }}>
+                        {employee.title}
+                      </div>
+                    )}
                     {employee.department && (
                       <div style={{
                         display: 'flex',
                         alignItems: 'center',
                         gap: '0.5rem',
-                        marginBottom: '0.5rem',
                         fontSize: '0.875rem',
                         color: 'var(--primary-text)'
                       }}>
@@ -527,23 +530,13 @@ export default function ProfessionalDirectory({ employees: initialEmployees }: P
                         display: 'flex',
                         alignItems: 'center',
                         gap: '0.5rem',
-                        fontSize: '0.875rem',
+                        fontSize: '0.8125rem',
                         color: 'var(--primary-text)'
                       }}>
-                        <UserGroupIcon style={{ width: '1rem', height: '1rem', color: 'var(--accent-color)', flexShrink: 0 }} />
-                        <span style={{ fontSize: '0.8125rem' }}>Team: {employee.team}</span>
+                        <UserGroupIcon style={{ width: '0.875rem', height: '0.875rem', color: 'var(--accent-color)', flexShrink: 0 }} />
+                        <span>Team: {employee.team}</span>
                       </div>
                     )}
-                  </div>
-
-                  {/* Contact Info */}
-                  <div style={{
-                    paddingTop: '1rem',
-                    borderTop: '1px solid var(--border-color)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '0.625rem'
-                  }}>
                     {employee.email && (
                       <a
                         href={`mailto:${employee.email}`}
@@ -566,7 +559,7 @@ export default function ProfessionalDirectory({ employees: initialEmployees }: P
                         }}
                       >
                         <EnvelopeIcon style={{ width: '1rem', height: '1rem', flexShrink: 0 }} />
-                        <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                        <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '250px' }}>
                           {employee.email}
                         </span>
                       </a>
