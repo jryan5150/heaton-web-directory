@@ -143,11 +143,40 @@ export default function ProfessionalDirectory({ employees: initialEmployees }: P
             </div>
           </div>
 
-          <div style={{
-            fontSize: '0.875rem',
-            color: 'var(--secondary-text)'
-          }} className="employee-count">
-            {filteredEmployees.length} employees
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <div style={{
+              fontSize: '0.875rem',
+              color: 'var(--secondary-text)'
+            }} className="employee-count">
+              {filteredEmployees.length} employees
+            </div>
+            <button
+              onClick={async () => {
+                await fetch('/api/auth/logout', { method: 'POST' })
+                window.location.href = '/login'
+              }}
+              style={{
+                padding: '0.5rem 1rem',
+                fontSize: '0.875rem',
+                fontWeight: 500,
+                color: 'var(--accent-color)',
+                backgroundColor: 'transparent',
+                border: '1px solid var(--accent-color)',
+                borderRadius: '0.5rem',
+                cursor: 'pointer',
+                transition: 'all 0.2s'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = 'var(--accent-color)'
+                e.currentTarget.style.color = 'white'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'transparent'
+                e.currentTarget.style.color = 'var(--accent-color)'
+              }}
+            >
+              Logout
+            </button>
           </div>
         </div>
       </header>
