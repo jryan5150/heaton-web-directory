@@ -10,7 +10,9 @@ import {
   PhoneIcon,
   MapPinIcon,
   UserGroupIcon,
-  BuildingOffice2Icon
+  BuildingOffice2Icon,
+  ArrowDownTrayIcon,
+  ChevronDownIcon
 } from '@heroicons/react/24/outline'
 
 interface ProfessionalDirectoryProps {
@@ -24,6 +26,8 @@ export default function ProfessionalDirectory({ employees: initialEmployees }: P
   const [selectedDepartment, setSelectedDepartment] = useState('all')
   const [selectedLocation, setSelectedLocation] = useState('all')
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [exportDropdownOpen, setExportDropdownOpen] = useState(false)
+  const [exporting, setExporting] = useState(false)
 
   // Get unique values
   const departments = ['all', ...Array.from(new Set(employees.map(e => e.department).filter(Boolean))).sort()]
@@ -55,6 +59,37 @@ export default function ProfessionalDirectory({ employees: initialEmployees }: P
 
     setFilteredEmployees(filtered)
   }, [searchTerm, selectedDepartment, selectedLocation, employees])
+
+  // Export handlers
+  const handleExport = async (format: 'csv' | 'pdf') => {
+    setExporting(true)
+    setExportDropdownOpen(false)
+
+    try {
+      const response = await fetch(`/api/export/${format}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ employees: filteredEmployees })
+      })
+
+      if (!response.ok) throw new Error('Export failed')
+
+      const blob = await response.blob()
+      const url = window.URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = response.headers.get('Content-Disposition')?.split('filename=')[1]?.replace(/"/g, '') || `export.${format}`
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      window.URL.revokeObjectURL(url)
+    } catch (error) {
+      console.error('Export error:', error)
+      alert('Export failed. Please try again.')
+    } finally {
+      setExporting(false)
+    }
+  }
 
   return (
     <div style={{
@@ -150,6 +185,119 @@ export default function ProfessionalDirectory({ employees: initialEmployees }: P
             }} className="employee-count">
               {filteredEmployees.length} employees
             </div>
+
+            {/* Export Dropdown */}
+            <div style={{ position: 'relative' }}>
+              <button
+                onClick={() => setExportDropdownOpen(!exportDropdownOpen)}
+                disabled={exporting}
+                style={{
+                  padding: '0.5rem 1rem',
+                  fontSize: '0.875rem',
+                  fontWeight: 500,
+                  color: exporting ? 'var(--secondary-text)' : 'var(--accent-color)',
+                  backgroundColor: 'transparent',
+                  border: `1px solid ${exporting ? 'var(--border-color)' : 'var(--accent-color)'}`,
+                  borderRadius: '0.5rem',
+                  cursor: exporting ? 'not-allowed' : 'pointer',
+                  transition: 'all 0.2s',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem'
+                }}
+                onMouseEnter={(e) => {
+                  if (!exporting) {
+                    e.currentTarget.style.backgroundColor = 'var(--accent-color)'
+                    e.currentTarget.style.color = 'white'
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!exporting) {
+                    e.currentTarget.style.backgroundColor = 'transparent'
+                    e.currentTarget.style.color = 'var(--accent-color)'
+                  }
+                }}
+              >
+                <ArrowDownTrayIcon style={{ width: '1rem', height: '1rem' }} />
+                {exporting ? 'Exporting...' : 'Export'}
+                <ChevronDownIcon style={{ width: '0.875rem', height: '0.875rem' }} />
+              </button>
+
+              {/* Dropdown Menu */}
+              {exportDropdownOpen && !exporting && (
+                <>
+                  <div
+                    style={{
+                      position: 'fixed',
+                      inset: 0,
+                      zIndex: 40
+                    }}
+                    onClick={() => setExportDropdownOpen(false)}
+                  />
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: 'calc(100% + 0.5rem)',
+                      right: 0,
+                      backgroundColor: 'white',
+                      borderRadius: '0.5rem',
+                      boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+                      border: '1px solid var(--border-color)',
+                      minWidth: '160px',
+                      zIndex: 50,
+                      overflow: 'hidden'
+                    }}
+                  >
+                    <button
+                      onClick={() => handleExport('csv')}
+                      style={{
+                        width: '100%',
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        textAlign: 'left',
+                        border: 'none',
+                        backgroundColor: 'white',
+                        cursor: 'pointer',
+                        transition: 'background-color 0.2s',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        color: 'var(--primary-text)'
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f7fafc'}
+                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'white'}
+                    >
+                      <ArrowDownTrayIcon style={{ width: '1rem', height: '1rem', color: 'var(--accent-color)' }} />
+                      Export as CSV
+                    </button>
+                    <button
+                      onClick={() => handleExport('pdf')}
+                      style={{
+                        width: '100%',
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        textAlign: 'left',
+                        border: 'none',
+                        borderTop: '1px solid var(--border-color)',
+                        backgroundColor: 'white',
+                        cursor: 'pointer',
+                        transition: 'background-color 0.2s',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        color: 'var(--primary-text)'
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f7fafc'}
+                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'white'}
+                    >
+                      <ArrowDownTrayIcon style={{ width: '1rem', height: '1rem', color: 'var(--accent-color)' }} />
+                      Export as PDF
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+
             <button
               onClick={async () => {
                 await fetch('/api/auth/logout', { method: 'POST' })
